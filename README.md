@@ -1,6 +1,6 @@
 # builder
 
-A tool for quickly generating pages
+ vue 拖拽小工具
 
 ## Project setup
 
