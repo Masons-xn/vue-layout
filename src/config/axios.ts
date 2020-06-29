@@ -8,7 +8,7 @@ import store from "../store/store"
 import code from "./code.json"
 
 const axios = Axios.create({
-  // baseURL: process.env.VUE_APP_URL,
+  baseURL: process.env.VUE_APP_URL,
 })
 
 export function encodeGETParams(url, params = {}) {
