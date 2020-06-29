@@ -1,6 +1,6 @@
-# builder
+# vue-page-builder
 
- vue 拖拽小工具
+ 基于vue实现的 拖拽快速形成页面
 
 ## Project setup
 
