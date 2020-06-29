@@ -1,0 +1,18 @@
+plug-in
+
+
+main.js 中 引入builderRegister，builderdirectives 分别是  builder 的标签注册和指令注册
+
+
+router 下增加了addRouters 文件
+ready.js 中增加了动态路由的注册
+
+builder 系统配置的builder
+
+projectbuilder 是为云脑准备的  为项目创建页面而编写的builder
+
+
+
+
+
+

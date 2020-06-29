@@ -1,0 +1,60 @@
+// 基础
+* {
+  box-sizing: border-box;
+}
+html, body {
+  margin: 0px;
+  height: 100%;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-size: 12px;
+  color: $color-text-main;
+  //min-width: 1300px;
+  overflow-x: hidden;
+  outline: none;
+  :focus{
+    outline: 0;
+  }
+  ul{
+    padding: 0;
+    margin: 0;
+    li{
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+  }
+  #app {
+    @extend %full;
+    a {
+      text-decoration: none;
+    }
+  }
+  ::-webkit-scrollbar {
+    width: 3px;
+    height: 6px;
+    background-color: #eaeaea;
+  }
+  ::-webkit-scrollbar-thumb {
+    width: 3px;
+    height: 6px;
+    background-color: rgba(188, 190, 191, 0.7);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #b4b6b7;
+  }
+  [flex-box ='1']{
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .tree-node-label{
+    max-width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-wrap: normal;
+  }
+  .main_wrapper{
+    width: 1200px;
+    margin: 0 auto;
+  }
+}
