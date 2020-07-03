@@ -1,12 +1,12 @@
 <template>
   <div style="width:100%;height:100%;">
     <div :class="layoutHorizontal" @click="unitSelect" @dblclick="unitEdit" draggable="true" @dragstart="unitMove" @dragleave="unitRemove" v-if="mode === 'dev'">
-      <div :class="layoutHorizontalInner" :id="item.id" :nodeparent="unitid" v-for="item of grid" :style="itemStyle(item)" @dragleave="unitRemove">
+      <div :class="layoutHorizontalInner" :id="item.id" :nodeparent="unitid" :key="item.id" v-for="item of grid" :style="itemStyle(item)" @dragleave="unitRemove">
         <container v-for="item of getChild(item.id)" :renId="item.unitID" :key="item.unitID"> </container>
       </div>
     </div>
     <div :class="layoutHorizontal" v-if="mode !== 'dev'">
-      <div class="container" :id="item.id" :nodeparent="unitid" v-for="item of grid" :style="itemStyle(item)">
+      <div class="container" :id="item.id" :nodeparent="unitid" :key="item.id" v-for="item of grid" :style="itemStyle(item)">
         <container v-for="item of getChild(item.id)" :renId="item.unitID" :key="item.unitID"> </container>
       </div>
     </div>
@@ -35,7 +35,7 @@ export default class RbLayoutHorizontal extends Vue {
   @Prop({
     default: "1",
     dataType: "string",
-    valueBus: ["2-1", "3-1", "2-1", "4-4-4", "3-3-3-3", '0-auto','100px-auto'],
+    valueBus: ["2-1", "3-1", "4-4-4", "3-3-3-3", "0-auto", "100px-auto"],
     des: "子grid的比例如果有空值并且是比例按12网格处理",
     alias: "网格比例"
   } as any)
@@ -51,8 +51,8 @@ export default class RbLayoutHorizontal extends Vue {
     const style = {}
     if (item.width) {
       Object.assign(style, { width: item.width })
-    } else if(item.flex) {
-      Object.assign(style, { flex: item.flex})
+    } else if (item.flex) {
+      Object.assign(style, { flex: item.flex })
     }
     return style
   }
@@ -62,7 +62,7 @@ export default class RbLayoutHorizontal extends Vue {
     const isNull = _.indexOf(size, "auto")
     let isPX = false
     const _this = this
-    const gridSize: { id: any; width?: string, flex?: string}[] = []
+    const gridSize: { id: any; width?: string; flex?: string }[] = []
     let tempId: string[] = []
     if (this.ids) {
       tempId = typeof this.ids === "string" ? this.ids.split(",") : this.ids
@@ -76,17 +76,17 @@ export default class RbLayoutHorizontal extends Vue {
       more.map(() => {
         tempId.push(newid())
       })
-    } else if(lenChange < 0) {
+    } else if (lenChange < 0) {
       tempId = _.dropRight(tempId, -lenChange)
     }
-    size.map((item) => {
+    size.map(item => {
       isPX = isPX || item.indexOf("px") > -1
     })
 
     if (isNull === -1 && !isPX) {
       // 不包含auto && 没有px
       let gridNum = 0
-      size.map((item) => {
+      size.map(item => {
         gridNum += parseInt(item)
       })
       size.map((item, index) => {
@@ -95,15 +95,14 @@ export default class RbLayoutHorizontal extends Vue {
           width: item === "auto" ? "auto" : (Number(item) * 100) / gridNum + "%"
         })
       })
-
     } else if (isPX) {
       size.map((item, index) => {
-        if(item === "auto"){
+        if (item === "auto") {
           gridSize.push({
             id: tempId[index],
-            flex:"auto"
+            flex: "auto"
           })
-        }else {
+        } else {
           gridSize.push({
             id: tempId[index],
             width: item === "auto" ? "auto" : item

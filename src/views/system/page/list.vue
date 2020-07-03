@@ -15,7 +15,7 @@
                   @click="editUser(row)"></g-button>
         <el-divider direction="vertical"></el-divider>
         <g-button button-type="delete"
-                  @click="delUser([row.id])"></g-button>
+                  @click="delUser(row.path)"></g-button>
       </template>
     </g-data-table>
   </div>
@@ -37,7 +37,7 @@ export default class UserList extends Vue {
   get params() {
     return []
   }
-  private method = "/rbpage/query"
+  private method = "/page/query"
   private user = 1
   private listData = []
   private treeData = []

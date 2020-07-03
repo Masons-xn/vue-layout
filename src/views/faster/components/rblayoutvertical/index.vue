@@ -1,12 +1,12 @@
 <template>
   <div style="width:100%;height:100%;">
     <div :class="layoutVertical" @click="unitSelect" @dblclick="unitEdit" draggable="true" @dragstart="unitMove" @dragleave="unitRemove" v-if="mode === 'dev'">
-      <div :class="layoutVerticalInner" :id="item.id" :nodeparent="unitid" v-for="item of grid" :style="itemStyle(item)" @dragleave="unitRemove">
+      <div :class="layoutVerticalInner" :id="item.id" :nodeparent="unitid" v-for="item of grid" :style="itemStyle(item)" :key="item.id" @dragleave="unitRemove">
         <container v-for="item of getChild(item.id)" :renId="item.unitID" :key="item.id"> </container>
       </div>
     </div>
     <div :class="layoutVertical" v-if="mode !== 'dev'">
-      <div class="container" :id="item.id" :nodeparent="unitid" v-for="item of grid" :style="itemStyle(item)">
+      <div class="container" :id="item.id" :nodeparent="unitid" v-for="item of grid" :key="item.id" :style="itemStyle(item)">
         <container v-for="item of getChild(item.id)" :renId="item.unitID" :key="item.id"> </container>
       </div>
     </div>
@@ -36,7 +36,7 @@ export default class RbLayoutVertical extends Vue {
   @Prop({
     default: "1",
     dataType: "string",
-    valueBus: ["2-1", "3-1", "2-1", "4-4-4", "3-3-3-3", '0-auto','100px-auto'],
+    valueBus: ["2-1", "3-1", "4-4-4", "3-3-3-3", "0-auto", "100px-auto"],
     des: "子grid的比例如果有空值并且是比例按12网格处理",
     alias: "网格比例"
   } as any)
@@ -51,8 +51,8 @@ export default class RbLayoutVertical extends Vue {
     const style = {}
     if (item.height) {
       Object.assign(style, { height: item.height })
-    } else if(item.flex) {
-      Object.assign(style, { flex: item.flex})
+    } else if (item.flex) {
+      Object.assign(style, { flex: item.flex })
     }
     return style
   }
@@ -61,7 +61,7 @@ export default class RbLayoutVertical extends Vue {
     const isNull = _.indexOf(size, "auto")
     let isPX = false
     const _this = this
-    const gridSize: { id: any; height?: string, flex?: string}[] = []
+    const gridSize: { id: any; height?: string; flex?: string }[] = []
     let tempId: string[] = []
     if (this.ids) {
       tempId = typeof this.ids === "string" ? this.ids.split(",") : this.ids
@@ -75,17 +75,17 @@ export default class RbLayoutVertical extends Vue {
       more.map(() => {
         tempId.push(newid())
       })
-    } else if(lenChange < 0) {
+    } else if (lenChange < 0) {
       tempId = _.dropRight(tempId, -lenChange)
     }
-    size.map((item) => {
+    size.map(item => {
       isPX = isPX || item.indexOf("px") > -1
     })
-   
+
     if (isNull === -1 && !isPX) {
       // 不包含auto && 没有px
       let gridNum = 0
-      size.map((item) => {
+      size.map(item => {
         gridNum += parseInt(item)
       })
       size.map((item, index) => {
@@ -94,15 +94,14 @@ export default class RbLayoutVertical extends Vue {
           height: item === "auto" ? "auto" : (Number(item) * 100) / gridNum + "%"
         })
       })
-      
     } else if (isPX) {
       size.map((item, index) => {
-        if(item === "auto"){
+        if (item === "auto") {
           gridSize.push({
             id: tempId[index],
-            flex:"auto"
+            flex: "auto"
           })
-        }else {
+        } else {
           gridSize.push({
             id: tempId[index],
             height: item === "auto" ? "auto" : item
@@ -146,8 +145,8 @@ export default class RbLayoutVertical extends Vue {
 .rb-layout-vertical {
   width: 100%;
   height: 100%;
-  &.unit-developing{
-    >.developing{
+  &.unit-developing {
+    > .developing {
     }
   }
   &.dev {

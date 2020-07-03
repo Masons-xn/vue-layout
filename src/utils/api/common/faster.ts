@@ -24,7 +24,7 @@ function fasterQueryPage(param = {}): Promise<any> {
   )
 }
 function fasterDelPage(param = {}): Promise<any> {
-  const url = "/rbpage/batchCascadeDelete"
+  const url = "/page/remove"
 
   return request(url, param, "post").then(
     res => {

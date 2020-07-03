@@ -1,9 +1,9 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin
 const CompressionPlugin = require("compression-webpack-plugin")
-const productionGzipExtensions = ['js', 'css']
-const webpack = require('webpack')
+const productionGzipExtensions = ["js", "css"]
+const webpack = require("webpack")
 module.exports = {
   runtimeCompiler: true,
   devServer: {
@@ -14,7 +14,7 @@ module.exports = {
     hotOnly: false,
     proxy: {
       "/api": {
-        target: "http://localhost:4004",
+        target: "http://localhost:3001",
         changeOrigin: true,
         ws: false
       }
@@ -39,13 +39,14 @@ module.exports = {
     //   "element-ui": "ELEMENT"
     // }
   },
-  productionSourceMap:false,
-  configureWebpack:{  // 覆盖webpack默认配置的都在这里
+  productionSourceMap: false,
+  configureWebpack: {
+    // 覆盖webpack默认配置的都在这里
     plugins: [
       // new BundleAnalyzerPlugin(),
       new webpack.SourceMapDevToolPlugin({
-        filename: 'js/[name].js.map',
-      }),
+        filename: "js/[name].js.map"
+      })
       // new MiniCssExtractPlugin({
       //   filename: "css/[name].css",
       //   chunkFilename: "css/[id].css"
@@ -58,6 +59,6 @@ module.exports = {
       //   deleteOriginalAssets: true,
       //   minRatio: 0.8
       // })
-    ],
+    ]
   }
 }
