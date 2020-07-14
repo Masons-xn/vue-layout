@@ -87,7 +87,7 @@ export {
   getModelRel,
   saveModel,
   delModel,
-  initModel
+  initModel,
   // getDictionary,
   // addDictionary,
   // delDictionary,
