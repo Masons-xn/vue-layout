@@ -10,7 +10,7 @@
     "analyz": "NODE_ENV=production npm_config_report=true npm run build"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "core-js": "^3.6.4",
     "echarts": "^4.7.0",
     "element-resize-event": "^3.0.3",
