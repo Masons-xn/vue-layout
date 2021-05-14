@@ -1,12 +1,15 @@
-import Vue from "vue"
-import VueI18n from "vue-i18n"
+/*
+ * @Description:
+ * @Author: 希宁
+ * @Date: 2020-07-30 16:08:30
+ * @LastEditTime: 2021-03-30 14:58:31
+ * @LastEditors:
+ */
+import Vue from 'vue'
+import VueI18n from 'vue-i18n'
 Vue.use(VueI18n)
 function loadLocaleMessages() {
-  const locales = require.context(
-      "../locales",
-      true,
-      /[A-Za-z0-9-_,\s]+\.json$/i
-    ),
+  const locales = require.context('../locales', true, /[A-Za-z0-9-_,\s]+\.json$/i),
     message: any = {}
 
   locales.keys().forEach(key => {
@@ -28,7 +31,7 @@ Vue.prototype.$languages = Object.keys(messages).map(langlage => ({
   value: langlage
 }))
 export default new VueI18n({
-  locale: "zh-chs",
-  fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE,
+  locale: 'zh-chs',
+  fallbackLocale: 'zh-chs',
   messages
 })

@@ -1,12 +1,16 @@
+<!--
+ * @Description: 
+ * @Author: 希宁
+ * @Date: 2020-07-30 16:08:30
+ * @LastEditTime: 2020-11-09 15:22:41
+ * @LastEditors:  
+-->
 <template>
   <div flex-box="0" flex="dir:left" class="head">
     <div class="header_bar" flex="dir:left" flex-box="1">
       <div flex-box="0" flex="dir:left">
         <div @click="sideBarSwitch" class="geye-mr-10">
-          <g-icon
-            :name="menuIsExpend === 'logo' ? 'zhankai' : 'shousuo'"
-            size="20"
-          />
+          <g-icon :name="menuIsExpend === 'logo' ? 'zhankai' : 'shousuo'" size="20" />
         </div>
       </div>
       <div flex-box="1">
@@ -17,8 +21,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Provide } from "vue-property-decorator"
-import headerBar from "./headerBar.vue"
+import { Vue, Component, Provide } from 'vue-property-decorator'
+import headerBar from './headerBar.vue'
 @Component({
   components: {
     headerBar
@@ -26,17 +30,16 @@ import headerBar from "./headerBar.vue"
 })
 export default class HeaderBar extends Vue {
   get menuIsExpend(): string {
-    return this.$store.getters.getIsExpand ? "logo is-expend" : "logo"
+    return this.$store.getters.getIsExpand ? 'logo is-expend' : 'logo'
   }
   public sideBarSwitch() {
-    this.$store.dispatch("setIsExpand", !this.$store.getters.getIsExpand)
+    this.$store.dispatch('setIsExpand', !this.$store.getters.getIsExpand)
   }
 }
 </script>
 
 <style scoped lang="scss">
 .head {
-  height: 50px;
   .logo {
     width: 64px;
     font-size: 0;

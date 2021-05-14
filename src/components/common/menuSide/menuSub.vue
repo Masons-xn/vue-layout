@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Author: 希宁
+ * @Date: 2020-07-30 16:08:30
+ * @LastEditTime: 2020-11-19 13:14:55
+ * @LastEditors:  
+-->
 <template>
   <el-submenu :index="menu.routerPath || uniqueId">
     <template slot="title">
@@ -17,10 +24,10 @@
 </template>
 
 <script lang="ts">
-import { uniqueId } from "lodash"
+import { uniqueId } from 'lodash'
 // 组件
-import MenuItem from "./menuItem.vue"
-import { Prop, PropSync, Provide, Vue, Component } from "vue-property-decorator"
+import MenuItem from './menuItem.vue'
+import { Prop, PropSync, Provide, Vue, Component } from 'vue-property-decorator'
 
 interface Menu {
   type: object
@@ -35,6 +42,6 @@ interface Menu {
 })
 export default class MenuSub extends Vue {
   @Prop(Object) public menu: Menu | undefined
-  public uniqueId = uniqueId("menu-empty-")
+  public uniqueId = uniqueId('menu-empty-')
 }
 </script>

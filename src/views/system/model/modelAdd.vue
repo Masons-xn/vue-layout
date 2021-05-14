@@ -6,11 +6,8 @@
     <div class="base_info">
       <div class="divider-title">
         基本属性
-        <g-button
-          @click="addNewProperty"
-          text="新增"
-          style="float:right"
-        ></g-button>
+        <g-button @click="addNewProperty" text="新增" style="float:right"></g-button>
+        <el-switch v-model="isPowered" active-text="受权限控制"> </el-switch>
       </div>
       <el-table :data="basicProperties">
         <el-table-column label="名称">
@@ -42,12 +39,7 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              @click="deletePropertyData(scope)"
-              type="text"
-              size="small"
-              >删除</el-button
-            >
+            <el-button @click="deletePropertyData(scope)" type="text" size="small">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -65,10 +57,7 @@
         <!--        </el-table-column>-->
         <el-table-column label="关联类型">
           <template slot-scope="scope">
-            <el-select
-              v-model="scope.row.inRelation"
-              :disabled="scope.row.inRelation === '0'"
-            >
+            <el-select v-model="scope.row.inRelation" :disabled="scope.row.inRelation === '0'">
               <el-option
                 v-for="item in refTypeOption"
                 :label="item.label"
@@ -108,15 +97,8 @@
 </template>
 
 <script lang="tsx">
-import {
-  Component,
-  Provide,
-  Vue,
-  Prop,
-  Watch,
-  Emit
-} from "vue-property-decorator"
-import _ from "lodash"
+import { Component, Provide, Vue, Prop, Watch, Emit } from 'vue-property-decorator'
+import _ from 'lodash'
 interface DataForm {
   stName: string
   stTableName: string
@@ -143,46 +125,43 @@ export default class ModelAdd extends Vue {
   public basicProperties: Base[] = []
   public refs: Refs[] = []
   public loading = true
+  isPowered = true
   public needDelRels: Refs[] = []
   public needDelPros: string[] = []
   public refTypeOption: any = [
-    { label: "一对多", value: "1" },
-    { label: "多对一", value: "0" }
+    { label: '一对多', value: '1' },
+    { label: '多对一', value: '0' }
   ]
   public form: DataForm = {
-    stName: "",
-    stTableName: "",
-    des: ""
+    stName: '',
+    stTableName: '',
+    des: ''
   }
   public typeOption: any = [
-    { label: "String", value: "varchar" },
-    { label: "Integer", value: "Integer" },
-    { label: "Boolean", value: "Boolean" },
-    { label: "Date", value: "Date" },
-    { label: "text", value: "text" },
-    { label: "Double", value: "Double" }
+    { label: 'String', value: 'varchar' },
+    { label: 'Integer', value: 'Integer' },
+    { label: 'Boolean', value: 'Boolean' },
+    { label: 'Date', value: 'Date' },
+    { label: 'text', value: 'text' },
+    { label: 'Double', value: 'Double' }
   ]
   get row() {
     return [
-      { label: this.$t("名称"), prop: "stName", placeholder: this.$t("名称") },
+      { label: this.$t('名称'), prop: 'stName', placeholder: this.$t('名称') },
       {
-        label: this.$t("表名"),
-        prop: "stTableName",
-        placeholder: this.$t("表名")
+        label: this.$t('表名'),
+        prop: 'stTableName',
+        placeholder: this.$t('表名')
       }
     ]
   }
   get rules() {
     return {
-      name: [
-        { required: true, message: this.$t("用户名不能为空"), trigger: "blur" }
-      ],
-      pass: [
-        { required: true, message: this.$t("密码不能为空"), trigger: "blur" }
-      ]
+      name: [{ required: true, message: this.$t('用户名不能为空'), trigger: 'blur' }],
+      pass: [{ required: true, message: this.$t('密码不能为空'), trigger: 'blur' }]
     }
   }
-  @Emit("pageLoad")
+  @Emit('pageLoad')
   public pageLoad() {
     return true
   }
@@ -198,9 +177,10 @@ export default class ModelAdd extends Vue {
     cb(model)
   }
   private saveModel() {
-    this.$api("saveModel", {
+    this.$api('saveModel', {
       data: {
         id: this.id,
+        isPowered: this.isPowered,
         stName: this.form.stName,
         stTableName: this.form.stTableName,
         rels: this.refs,
@@ -213,24 +193,15 @@ export default class ModelAdd extends Vue {
     })
   }
   private loadData() {
-    // eslint-disable-next-line no-undef
-    Promise.all([
-      this.getModel(),
-      this.getModelBase(),
-      this.getModelRel()
-    ]).then(() => {
+    Promise.all([this.getModel(), this.getModelBase(), this.getModelRel()]).then(() => {
       this.loading = false
     })
   }
   private refTypeModelName(scope: {
     row: { stDestModelID: any; modelName: any; stName: any; stDestName: string }
   }) {
-    scope.row.stDestModelID = this.models.filter(
-      item => item.label === scope.row.modelName
-    )[0].id
-    scope.row.stName = this.models.filter(
-      item => item.label === scope.row.modelName
-    )[0].stTableName
+    scope.row.stDestModelID = this.models.filter(item => item.label === scope.row.modelName)[0].id
+    scope.row.stName = this.models.filter(item => item.label === scope.row.modelName)[0].stTableName
     scope.row.stDestName = this.form.stTableName
   }
   private clearData() {
@@ -238,56 +209,50 @@ export default class ModelAdd extends Vue {
     this.refs.length = 0
     this.loading = false
     this.form = {
-      stName: "",
-      stTableName: "",
-      des: ""
+      stName: '',
+      stTableName: '',
+      des: ''
     }
   }
   private getModel() {
-    this.$api("getModel", { where: [{ and: [{ modelId: this.id }] }] }).then(
-      res => {
-        this.form = res.result.list[0]
-      }
-    )
+    this.$api('getModel', { where: [{ and: [{ modelId: this.id }] }] }).then(res => {
+      this.form = res.result.list[0]
+      this.isPowered = res.result.list[0].isPowered === 1 ? true : false
+    })
   }
   private getModelBase() {
-    this.$api("getModelBase", {
+    this.$api('getModelBase', {
       where: [{ and: [{ modelId: this.id }] }]
     }).then(res => {
       this.basicProperties = res && res.result && res.result.list
     })
   }
   private getModelRel() {
-    this.$api("getModelRel", { where: [{ and: [{ modelId: this.id }] }] }).then(
-      (res:any) => {
-        const data = res && res.result && res.result.list
-        data.map((mo: Refs) => {
-          mo.modelName = this.getModelName(mo)
-          mo.inRelation = String(mo.inRelation)
-        })
-        this.refs = data
-      }
-    )
+    this.$api('getModelRel', { where: [{ and: [{ modelId: this.id }] }] }).then((res: any) => {
+      const data = res && res.result && res.result.list
+      data.map((mo: Refs) => {
+        mo.modelName = this.getModelName(mo)
+        mo.inRelation = String(mo.inRelation)
+      })
+      this.refs = data
+    })
   }
-  private getModelName(model:Refs) {
+  private getModelName(model: Refs) {
     return this.models.filter(item => item.id === model.stDestModelID)[0].stName
   }
   private addNewProperty() {
     this.basicProperties.push({
-      stName: "",
-      stType: "varchar",
-      stColumnName: "",
-      stlength: "32"
+      stName: '',
+      stType: 'varchar',
+      stColumnName: '',
+      stlength: '32'
     })
   }
   private deletePropertyData(data: { row: { id: string }; $index: number }) {
     if (data.row.id) {
       this.needDelPros.push(data.row.id)
     }
-    this.basicProperties = _.remove(
-      this.basicProperties,
-      (item, index) => index !== data.$index
-    )
+    this.basicProperties = _.remove(this.basicProperties, (item, index) => index !== data.$index)
   }
   private deleteRefData(data: { row: Refs; $index: number }) {
     if (data.row.id) {
@@ -297,15 +262,15 @@ export default class ModelAdd extends Vue {
   }
   private addNewRef() {
     this.refs.push({
-      id: "",
-      stName: "",
-      inRelation: "1",
-      modelName: "",
-      stDestName: "",
-      stDestModelID:''
+      id: '',
+      stName: '',
+      inRelation: '1',
+      modelName: '',
+      stDestName: '',
+      stDestModelID: ''
     })
   }
-  @Watch("id", { immediate: true })
+  @Watch('id', { immediate: true })
   private onChange(val: string) {
     if (val) {
       this.loadData()

@@ -1,11 +1,18 @@
+/*
+ * @Description:
+ * @Author: 希宁
+ * @Date: 2020-12-09 10:20:02
+ * @LastEditTime: 2021-04-22 18:16:12
+ * @LastEditors:
+ */
 let pool: any = {}
-const files = require.context("./", true, /.(ts|js)$/).keys()
+const files = require.context('./', true, /.(ts|js)$/).keys()
 for (const item of files) {
-  if (item !== "./index.ts") {
+  if (item !== './index.ts') {
     pool = Object.assign(require(`${item}`), pool)
   }
 }
-const addToPool = (obj:any) => {
+const addToPool = (obj: any) => {
   pool = Object.assign(pool, obj)
 }
 const Call = (method: string, param?: any) => {
@@ -36,10 +43,10 @@ declare interface Call {
 
 const Api = { install }
 
-declare module "vue/types/vue" {
+declare module 'vue/types/vue' {
   interface Vue {
     $api: typeof Call
   }
 }
 
-export {Api,addToPool}
+export { Api, addToPool }

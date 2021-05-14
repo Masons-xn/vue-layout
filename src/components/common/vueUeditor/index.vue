@@ -1,44 +1,47 @@
 <template>
-  <div v-loading='loading'
-       class="geye-p-8 height100">
-    <quill-editor v-model="value"
-                  ref="QuillEditor"
-                  class="vue-quill-editor"
-                  @change='ValueChange(value)'
-                  :options="editorOption">
+  <div v-loading="loading" class="geye-p-8 height100">
+    <quill-editor
+      v-model="value"
+      ref="QuillEditor"
+      class="vue-quill-editor"
+      @change="ValueChange(value)"
+      :options="editorOption"
+    >
     </quill-editor>
-    <g-upload :list="pathId"
-              ref="upload"
-              id="quill"
-              v-on:success='uploadSuccess'
-              multiple='multiple'
-              v-on:beforeUpload=beforeUpload></g-upload>
+    <g-upload
+      :list="pathId"
+      ref="upload"
+      id="quill"
+      v-on:success="uploadSuccess"
+      multiple="multiple"
+      v-on:beforeUpload="beforeUpload"
+    ></g-upload>
   </div>
 </template>
 <script lang="ts">
 const toolbarOptions = [
-  ["bold", "italic", "underline", "strike"],
-  ["blockquote", "code-block"],
+  ['bold', 'italic', 'underline', 'strike'],
+  ['blockquote', 'code-block'],
   [{ header: 1 }, { header: 2 }],
-  [{ list: "ordered" }, { list: "bullet" }],
-  [{ script: "sub" }, { script: "super" }],
-  [{ indent: "-1" }, { indent: "+1" }],
-  [{ direction: "rtl" }],
-  [{ size: ["small", false, "large", "huge"] }],
+  [{ list: 'ordered' }, { list: 'bullet' }],
+  [{ script: 'sub' }, { script: 'super' }],
+  [{ indent: '-1' }, { indent: '+1' }],
+  [{ direction: 'rtl' }],
+  [{ size: ['small', false, 'large', 'huge'] }],
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
   [{ color: [] }, { background: [] }],
   [{ font: [] }],
   [{ align: [] }],
-  ["link", "image", "video"],
-  ["clean"]
+  ['link', 'image', 'video'],
+  ['clean']
 ]
 // @focus="onEditorFocus($event)"
 // @blur="onEditorBlur($event)"
 // @change="onEditorChange($event)">
-import { Vue, Component, Prop, Model, Emit } from "vue-property-decorator"
-import { quillEditor } from "vue-quill-editor"
-import "quill/dist/quill.snow.css"
-import * as Quill from "quill"
+import { Vue, Component, Prop, Model, Emit } from 'vue-property-decorator'
+import { quillEditor } from 'vue-quill-editor'
+import 'quill/dist/quill.snow.css'
+import * as Quill from 'quill'
 @Component({
   components: {
     quillEditor
@@ -46,10 +49,10 @@ import * as Quill from "quill"
 })
 export default class Index extends Vue {
   pathId: any = []
-  @Model("change", { type: String, default: "123" }) public content: string
+  @Model('change', { type: String, default: '123' }) public content: string
   // @Prop({default:''}) model: string
   // content= ``
-  value = ""
+  value = ''
   loading = false
   editorOption = {
     modules: {
@@ -58,21 +61,21 @@ export default class Index extends Vue {
         handlers: {
           image: value => {
             if (value) {
-              this.$bus.emit("triggerUpload", "aaa")
+              this.$bus.emit('triggerUpload', 'aaa')
             }
           },
           clean: val => {
-            this.content = ""
+            this.content = ''
           }
         }
       }
     },
-    placeholder: "请输入正文"
+    placeholder: '请输入正文'
   }
   beforeUpload() {
     this.loading = true
   }
-  @Emit("change")
+  @Emit('change')
   ValueChange() {}
   created(): void {
     this.value = this.content
@@ -81,7 +84,7 @@ export default class Index extends Vue {
     let quill = (this.$refs.QuillEditor as any).quill
     if (res) {
       let length = quill.getSelection().index
-      quill.insertEmbed(length, "image", res)
+      quill.insertEmbed(length, 'image', res)
       quill.setSelection(length + 1)
       this.loading = false
     } else {
@@ -124,4 +127,3 @@ export default class Index extends Vue {
   }
 }
 </style>
-

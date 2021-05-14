@@ -2,9 +2,9 @@
  * Created by xining.lao on 6/16/2017.
  */
 // import bus from "../core/eventbus"
-import { Fast } from "../core/config"
-import _ from "lodash"
-import bus from "@/views/faster/builder/core/eventbus"
+import { Fast } from '../core/config'
+import _ from 'lodash'
+import bus from '@/views/faster/builder/core/eventbus'
 
 let action: string
 // let param
@@ -18,34 +18,42 @@ export default {
       }
     },
     formItemSetLabel(that: { formItemSetLabel: (arg0: any) => void }) {
-      return function (arg: any) {
+      return function(arg: any) {
         that.formItemSetLabel(arg)
       }
     },
     formItemremoveLabel(that: { formItemremoveLabel: (arg0: any) => void }) {
-      return function (arg: any) {
+      return function(arg: any) {
         that.formItemremoveLabel(arg)
       }
     },
     saveAndReload(that: { saveAndReload: (arg0: any) => void }) {
-      return function (arg: any) {
+      return function(arg: any) {
         that.saveAndReload(arg)
       }
     },
     saveAndBack(that: { saveAndBack: (arg0: any) => void }) {
-      return function (arg: any) {
+      return function(arg: any) {
         that.saveAndBack(arg)
       }
     }
   },
   method: {
-    formItemSetLabel: function (unit: { unitPid: any; unitID: any; formLabel: any; validateFail: any; isrequire: any; dataKey: any; errMsg: any }) {
+    formItemSetLabel: function(unit: {
+      unitPid: any
+      unitID: any
+      formLabel: any
+      validateFail: any
+      isrequire: any
+      dataKey: any
+      errMsg: any
+    }) {
       if (unit.unitPid) {
         // @ts-ignore
         const parent = this.getThisParent(unit)
-        if (parent && parent.unitName === "RbForm") {
+        if (parent && parent.unitName === 'RbForm') {
           const child = Fast.Mapping[parent.unitID].childCom || []
-          child.map(function (item) {
+          child.map(function(item) {
             if (item.unitID === unit.unitID) {
               item.formLabel = unit.formLabel
               item.validateFail = unit.validateFail
@@ -62,26 +70,32 @@ export default {
       if (unit.unitPid) {
         // @ts-ignore
         const parent = this.getThisParent(unit)
-        if (parent && parent.unitName === "RbForm") {
+        if (parent && parent.unitName === 'RbForm') {
           const formitems = parent.$refs.form[0].$children
-          formitems.map((item: { label: any; $el: { remove: () => void }; $destroy: (arg0: boolean) => void }) => {
-            if (item.label === unit.formLabel) {
-              if (item && item.$el) {
-                item.$el.remove()
+          formitems.map(
+            (item: {
+              label: any
+              $el: { remove: () => void }
+              $destroy: (arg0: boolean) => void
+            }) => {
+              if (item.label === unit.formLabel) {
+                if (item && item.$el) {
+                  item.$el.remove()
+                }
+                item.$destroy(true)
               }
-              item.$destroy(true)
             }
-          })
+          )
         }
       }
     },
     commonSave(next?: any) {
       const datatemp = {
-        id: ""
+        id: ''
       }
       let form: any = {}
-      _.forIn(Fast.Mapping, function (value, key) {
-        if (key.indexOf("rbform") > -1) {
+      _.forIn(Fast.Mapping, function(value, key) {
+        if (key.indexOf('rbform') > -1) {
           form = Fast.Mapping[key]
         }
       })
@@ -94,7 +108,7 @@ export default {
           unit.$forceUpdate()
         }
       })
-      requires.map(function (item) {
+      requires.map(function(item) {
         if (item.validateFail === undefined || item.validateFail === true) {
           verificationstate = false
         }
@@ -103,11 +117,11 @@ export default {
         return
       }
       function builddata(data: { [x: string]: any; id?: string }, key: string, value: any) {
-        if (key.indexOf(".") > -1) {
-          if (!data[key.split(".")[0]]) {
-            data[key.split(".")[0]] = {}
+        if (key.indexOf('.') > -1) {
+          if (!data[key.split('.')[0]]) {
+            data[key.split('.')[0]] = {}
           }
-          builddata(data[key.split(".")[0]], key.split(".")[1], value)
+          builddata(data[key.split('.')[0]], key.split('.')[1], value)
         } else {
           data[key] = value
         }
@@ -131,7 +145,7 @@ export default {
         // @ts-ignore
         this.$message({
           message: msg,
-          type: "success"
+          type: 'success'
         })
         next()
       })
@@ -140,7 +154,7 @@ export default {
       this.commonSave(() => {
         for (const unit in Fast.Mapping) {
           if (unit.indexOf('dialog') > -1) {
-            bus.trigger("dialogColse", unit)
+            bus.trigger('dialogColse', unit)
           }
           if (unit.indexOf('table') > -1) {
             try {
@@ -159,22 +173,21 @@ export default {
       })
     },
     formInit(arg: { [x: string]: string }) {
-      if (arg["action"]) {
-        action = arg["action"]
+      if (arg['action']) {
+        action = arg['action']
       }
-      if (action === "search" || action === "update") {
-        this.formloaddetial(arg["param"])
+      if (action === 'search' || action === 'update') {
+        this.formloaddetial(arg['param'])
       }
     },
     // formItemRemove(arg: { [x: string]: string }) {
-    //   // console.log(this)
     // },
     formloaddetial(arg: string) {
       let form: any
       const that = this
       function formsetvalue(unit: { value: any }, data: { [x: string]: any }, key: string) {
-        if (key.indexOf(".") > -1) {
-          formsetvalue(unit, data[key.split(".")[0]], key.split(".")[1])
+        if (key.indexOf('.') > -1) {
+          formsetvalue(unit, data[key.split('.')[0]], key.split('.')[1])
         } else {
           unit.value = data[key]
         }
@@ -186,20 +199,20 @@ export default {
       } catch (e) {
         console.log(e)
       }
-      _.forIn(Fast.Mapping, function (value, key) {
-        if (key.indexOf("rbform") > -1) {
+      _.forIn(Fast.Mapping, function(value, key) {
+        if (key.indexOf('rbform') > -1) {
           form = Fast.Mapping[key]
         }
       })
       // @ts-ignore
-      this.$axios.get(form.detialUrl, { data: [arg] }).then(function (resp: { data: { id: any } }) {
+      this.$axios.get(form.detialUrl, { data: [arg] }).then(function(resp: { data: { id: any } }) {
         // @ts-ignore
         const childUnits = that.getchildUnits(Fast, form)
         const currentdata = resp.data
         id = resp.data.id
-        childUnits.map(function (item) {
+        childUnits.map(function(item) {
           if (item && item.datakey) {
-            if (action === "search") {
+            if (action === 'search') {
               Fast.Mapping[item.unitID].disabled = true
             }
             formsetvalue(Fast.Mapping[item.unitID], currentdata, item.datakey)

@@ -1,20 +1,27 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin")
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin
-const CompressionPlugin = require("compression-webpack-plugin")
-const productionGzipExtensions = ["js", "css"]
-const webpack = require("webpack")
+/*
+ * @Description:
+ * @Author: 希宁
+ * @Date: 2020-07-30 16:08:30
+ * @LastEditTime: 2021-03-02 17:50:04
+ * @LastEditors:
+ */
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const CompressionPlugin = require('compression-webpack-plugin')
+const productionGzipExtensions = ['js', 'css']
+const webpack = require('webpack')
 module.exports = {
   runtimeCompiler: true,
   devServer: {
     open: true,
-    host: "0.0.0.0",
-    port: 8081,
+    host: '0.0.0.0',
+    port: 8888,
     https: false,
     hotOnly: false,
     proxy: {
-      "/api": {
-        target: "http://localhost:3001",
+      '/api': {
+        target: 'http://localhost:3002/',
         changeOrigin: true,
         ws: false
       }
@@ -45,7 +52,7 @@ module.exports = {
     plugins: [
       // new BundleAnalyzerPlugin(),
       new webpack.SourceMapDevToolPlugin({
-        filename: "js/[name].js.map"
+        filename: 'js/[name].js.map'
       })
       // new MiniCssExtractPlugin({
       //   filename: "css/[name].css",

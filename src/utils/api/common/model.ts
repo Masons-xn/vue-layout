@@ -1,4 +1,11 @@
-import request from "../../../config/axios"
+/*
+ * @Description:
+ * @Author: 希宁
+ * @Date: 2020-07-30 16:08:30
+ * @LastEditTime: 2021-04-22 18:13:15
+ * @LastEditors:
+ */
+import request from '../../../config/axios'
 
 // function getDictionary(param: any): Promise<any> {
 //   const url = '/dictionary/query'
@@ -10,7 +17,7 @@ import request from "../../../config/axios"
 // }
 //
 function saveModel(param: any): Promise<any> {
-  return request("/model/save", param, "post").then(
+  return request('/model/save', param, 'post').then(
     res => {
       return Promise.resolve(res)
     },
@@ -21,9 +28,8 @@ function saveModel(param: any): Promise<any> {
 }
 
 function getModel(param = {}): Promise<any> {
-  const url = "/model/query"
-
-  return request(url, param, "post").then(
+  const url = '/model/query'
+  return request(url, param, 'post').then(
     res => {
       return Promise.resolve(res)
     },
@@ -33,9 +39,9 @@ function getModel(param = {}): Promise<any> {
   )
 }
 function getModelBase(param = {}): Promise<any> {
-  const url = "/model/queryBase"
+  const url = '/model/queryBase'
 
-  return request(url, param, "post").then(
+  return request(url, param, 'post').then(
     res => {
       return Promise.resolve(res)
     },
@@ -45,9 +51,9 @@ function getModelBase(param = {}): Promise<any> {
   )
 }
 function getModelRel(param = {}): Promise<any> {
-  const url = "/model/queryRel"
+  const url = '/model/queryRel'
 
-  return request(url, param, "post").then(
+  return request(url, param, 'post').then(
     res => {
       return Promise.resolve(res)
     },
@@ -57,9 +63,9 @@ function getModelRel(param = {}): Promise<any> {
   )
 }
 function delModel(param = {}): Promise<any> {
-  const url = "/model/delModel"
+  const url = '/model/delModel'
 
-  return request(url, param, "post").then(
+  return request(url, param, 'post').then(
     res => {
       return Promise.resolve(res)
     },
@@ -69,9 +75,9 @@ function delModel(param = {}): Promise<any> {
   )
 }
 function initModel(param = {}): Promise<any> {
-  const url = "/model/initModel"
+  const url = '/model/initModel'
 
-  return request(url, param, "post").then(
+  return request(url, param, 'post').then(
     res => {
       return Promise.resolve(res)
     },
@@ -87,7 +93,7 @@ export {
   getModelRel,
   saveModel,
   delModel,
-  initModel,
+  initModel
   // getDictionary,
   // addDictionary,
   // delDictionary,

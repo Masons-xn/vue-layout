@@ -1,5 +1,12 @@
-import store from "../store"
-import request from "@/config/axios"
+/*
+ * @Description:
+ * @Author: 希宁
+ * @Date: 2020-07-30 16:08:30
+ * @LastEditTime: 2021-04-22 17:51:56
+ * @LastEditors:
+ */
+import store from '../store'
+import request from '@/config/axios'
 import { addToPool } from '@/utils/api/index'
 export default {
   state: {
@@ -9,10 +16,10 @@ export default {
   mutations: {
     setModelService(state, arg) {
       const service = {}
-
-      const serviceAdd = (url) => {
+      const serviceAdd = url => {
         return (param: any = {}): Promise<any> => {
-          return request(url, param, "post").then(
+          console.log(url)
+          return request(url, param, 'post').then(
             res => {
               return Promise.resolve(res)
             },
@@ -23,16 +30,21 @@ export default {
         }
       }
       arg.list.map(item => {
-        const modelName = item.stTableName.replace(item.stTableName[0], item.stTableName[0].toUpperCase())
+        const modelName = item.stTableName.replace(
+          item.stTableName[0],
+          item.stTableName[0].toUpperCase()
+        )
+        service[`del${modelName}`] = serviceAdd(`/${item.stTableName}/del`)
         service[`add${modelName}`] = serviceAdd(`/${item.stTableName}/add`)
         service[`update${modelName}`] = serviceAdd(`/${item.stTableName}/update`)
-        service[`del${modelName}`] = serviceAdd(`/${item.stTableName}/del`)
         service[`batchCascadeAdd${modelName}`] = serviceAdd(`/${item.stTableName}/batchCascadeAdd`)
         service[`save${modelName}`] = serviceAdd(`/${item.stTableName}/save`)
         service[`get${modelName}`] = serviceAdd(`/${item.stTableName}/get`)
         service[`query${modelName}`] = serviceAdd(`/${item.stTableName}/query`)
         service[`query${modelName}All`] = serviceAdd(`/${item.stTableName}/queryAll`)
-        service[`batchCascadeDelete${modelName}`] = serviceAdd(`/${item.stTableName}/batchCascadeDelete`)
+        service[`batchCascadeDelete${modelName}`] = serviceAdd(
+          `/${item.stTableName}/batchCascadeDelete`
+        )
       })
       addToPool(service)
       state.modelService = service
@@ -41,15 +53,14 @@ export default {
   },
   actions: {
     modelInit({ commit, dispatch }, vue) {
-      return vue.$api("getModel").then((res: any) => {
+      return vue.$api('getModel').then((res: any) => {
         if (res.result && res.result.list && res.result.list.length > 0) {
           return commit('setModelService', { list: res.result.list, vue: vue })
-        }
-        else {
+        } else {
           return true
         }
       })
-    },
+    }
   },
   getters: {
     getModelService: state => {

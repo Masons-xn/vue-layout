@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Author: 希宁
+ * @Date: 2020-07-30 16:08:30
+ * @LastEditTime: 2020-11-19 13:19:47
+ * @LastEditors:  
+-->
 <template>
   <el-menu-item :index="menu.routerPath || uniqueId">
     <g-icon :name="menu.icon" size="20" class="geye-mr-10"></g-icon>
@@ -6,8 +13,8 @@
 </template>
 
 <script lang="ts">
-import { uniqueId } from "lodash"
-import { Prop, PropSync, Provide, Vue, Component } from "vue-property-decorator"
+import { uniqueId } from 'lodash'
+import { Prop, PropSync, Provide, Vue, Component } from 'vue-property-decorator'
 interface Menu {
   type: object
   required: boolean
@@ -16,6 +23,6 @@ interface Menu {
 @Component
 export default class MenuItem extends Vue {
   @Prop(Object) public menu: Menu
-  public uniqueId = uniqueId("")
+  public uniqueId = uniqueId('')
 }
 </script>
